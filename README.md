@@ -34,9 +34,20 @@ Which (if any) progressive web app feature(s) does your app support?
 ## Mockup images
 
 **[Add images/photos that show your mockup](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository) along with a very brief caption:**
+Each mockup consists of the ideal view for a PC on the left next to the ideal view for a mobile device on the right. Our project is a habit tracker, where each day you can track habits such as your mood, a quick diary entry, and anything you're hoping to get done for the day. It allows you to view previous journal entries on an individual level and your previous journals at large by tracking stats about your mood or how often you've completed specific habits.
 
-![](https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif)
-
+### Title Page
+![Title Page](titlemockup.png)  
+### Home Page
+![Home Page](homepagemockup.png)  
+### View Previous Journals
+![Journals Page](previousjournalsmockup.png)  
+### Popup Page
+![Popup Page](popupmockup.png)  
+### Settings Page
+![Settings Page](settingsmockup.png)  
+### Stats Page
+![Stats Page](statsmockup.png)  
 
 ## Testing Notes
 
