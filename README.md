@@ -79,3 +79,9 @@ relied on external code, expertise, or anything else, please disclose that
 here:**
 
 ...
+
+
+npm install pug
+npm install
+npm install firebase@^9.23.0
+npm install vuefire@next

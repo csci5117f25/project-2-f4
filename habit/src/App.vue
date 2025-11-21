@@ -1,15 +1,10 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import topBar from './components/topBar.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-
-  </header>
+  <topBar />
 
   <RouterView />
 </template>
-
-<style scoped>
-
-</style>
