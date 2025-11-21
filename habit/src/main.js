@@ -1,5 +1,5 @@
 import './assets/main.css'
-
+import '/src/style.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -11,7 +11,7 @@ import { VueFire, VueFireAuth } from 'vuefire'
 import { getAuth } from 'firebase/auth'
 import { firebaseApp } from './firebase_config.js'
 
-///           end of login imports 
+///           end of login imports
 
 const app = createApp(App)
 
@@ -24,10 +24,10 @@ app.use(router)
 app.use(VueFire, {
   firebaseApp,
   modules: [
-    VueFireAuth({ auth }) 
+    VueFireAuth({ auth })
   ]
 })
 
-////                     end of login 
+////                     end of login
 
 app.mount('#app')
