@@ -1,7 +1,32 @@
 <script setup>
   import Habit from '../components/individualHabit.vue'
-  import Countdown from '../components/countdown.vue'
-  import { ref, watch, toRaw } from 'vue';
+  import Countdown from '../components/countdownComponent.vue'
+  import { ref, watch, toRaw, onMounted } from 'vue';
+
+  import {db} from '../firebase_config'
+  import { doc, setDoc, getDoc } from "firebase/firestore";
+
+  let existingJournal = {};
+
+  async function setupJournal () {
+    const todaysDate = new Date().toISOString().split('T')[0];
+    const docRef = doc(db, "journals", todaysDate);
+    const existingJournalRef = await getDoc(docRef);
+
+    if (existingJournalRef.exists()) {
+      existingJournal = existingJournalRef.data();
+      rating.value = existingJournal.rating;
+
+      completedHabits.value = { 
+        ...completedHabits.value, 
+        ...existingJournal.habits 
+      };
+      
+      document.getElementById('journalentry').value = existingJournal['journalentry'];
+    } else {
+      console.log("No such document!");
+    }
+  }
 
   const habitList = [
     "Workout",
@@ -14,24 +39,29 @@
     Object.fromEntries(habitList.map(h => [h, false]))
   )
 
-  function updateJournalEntry() {
+  async function updateJournalEntry() {
     let journal = {}
     journal['rating'] = rating.value;
     journal['habits'] = toRaw(completedHabits.value);
     journal['journalentry'] = document.getElementById('journalentry').value;
     
     console.log(journal);
+    const todaysDate = new Date().toISOString().split('T')[0];
+    await setDoc(doc(db, "journals", todaysDate), journal);
   }
   
-  function toggleHabit(habitName) {
-    completedHabits.value[habitName] = !completedHabits.value[habitName]
-    console.log(completedHabits.value);
-    updateJournalEntry()
-  }
-
   watch(rating, async() => {
     updateJournalEntry();
   })
+
+  watch(completedHabits, () => {
+    updateJournalEntry()
+  }, { deep: true })
+
+  onMounted(() => {
+    setupJournal()
+  });
+
 </script>
 
 
@@ -53,7 +83,7 @@
       v-for="habit in habitList"
       :key="habit"
       :title="habit"
-      @complete-habit="toggleHabit(habit)"
+      v-model="completedHabits[habit]"
     />
 
   <h2>Journal Entry</h2>
