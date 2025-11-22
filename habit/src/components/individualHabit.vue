@@ -1,16 +1,16 @@
 <script setup>
-const props = defineProps({ title: {
-    type: String,
-    required: true
-  }})
-const emit = defineEmits(['complete-habit'])
+const props = defineProps({
+  title: String,
+  modelValue: Boolean
+})
+const emit = defineEmits(['update:modelValue'])
 </script>
 
 
 <template>
   <div id="habit1" class="habit">
     <p>{{ props.title }}</p>
-    <input type="checkbox" class="checkbox" @click="emit('complete-habit')"/>
+    <input type="checkbox" class="checkbox" :checked="modelValue" @change="emit('update:modelValue', $event.target.checked)" />
   </div>
 </template>
 

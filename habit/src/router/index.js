@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/Home.vue'
-import Tracker from '../views/Tracker.vue'
+import HomeView from '../views/HomeView.vue'
+import TrackerView from '../views/TrackerView.vue'
 import PastJournals from '../views/PastJournals.vue'
 
 const router = createRouter({
@@ -15,7 +15,7 @@ const router = createRouter({
         {
       path: '/tracker',
       name: 'tracker',
-      component: Tracker,
+      component: TrackerView,
     },
     {
       path: '/past-journals',
