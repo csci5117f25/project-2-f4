@@ -1,8 +1,9 @@
 <script setup>
-  import { onMounted } from 'vue'
+  import { onMounted, onUnmounted } from 'vue'
 
   const midnightCST = new Date();
   midnightCST.setHours(24, 0, 0, 0);
+  let intervalId;
 //   console.log(midnightCST);
 
   function updateCountdown() {
@@ -13,17 +14,23 @@
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
-    document.getElementById("hh").style.setProperty("--value", hours);
-    document.getElementById("mm").style.setProperty("--value", minutes);
-    document.getElementById("ss").style.setProperty("--value", seconds);
+    const hhEl = document.getElementById("hh");
+    const mmEl = document.getElementById("mm");
+    const ssEl = document.getElementById("ss");
+    if (hhEl) hhEl.style.setProperty("--value", hours);
+    if (mmEl) mmEl.style.setProperty("--value", minutes);
+    if (ssEl) ssEl.style.setProperty("--value", seconds);
   }
 
   onMounted(() => {
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  });
+  updateCountdown();
+  intervalId = setInterval(updateCountdown, 1000);
+    });
 
-</script>
+  onUnmounted(() => {
+  clearInterval(intervalId);
+    });
+  </script>
 
 
 <template>
