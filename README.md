@@ -37,17 +37,17 @@ Which (if any) progressive web app feature(s) does your app support?
 Each mockup consists of the ideal view for a PC on the left next to the ideal view for a mobile device on the right. Our project is a habit tracker, where each day you can track habits such as your mood, a quick diary entry, and anything you're hoping to get done for the day. It allows you to view previous journal entries on an individual level and your previous journals at large by tracking stats about your mood or how often you've completed specific habits.
 
 ### Title Page
-![Title Page](titlemockup.png)  
+![Title Page](mockup/titlemockup.png)  
 ### Home Page
-![Home Page](homepagemockup.png)  
+![Home Page](mockup/homepagemockup.png)  
 ### View Previous Journals
-![Journals Page](previousjournalsmockup.png)  
+![Journals Page](mockup/previousjournalsmockup.png)  
 ### Popup Page
-![Popup Page](popupmockup.png)  
+![Popup Page](mockup/popupmockup.png)  
 ### Settings Page
-![Settings Page](settingsmockup.png)  
+![Settings Page](mockup/settingsmockup.png)  
 ### Stats Page
-![Stats Page](statsmockup.png)  
+![Stats Page](mockup/statsmockup.png)  
 
 ## Testing Notes
 
