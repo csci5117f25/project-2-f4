@@ -6,22 +6,26 @@
   import {db} from '../firebase_config'
   import { doc, setDoc, getDoc } from "firebase/firestore";
 
+  import { useCurrentUser } from 'vuefire'
+  const user = useCurrentUser()
+
   let existingJournal = {};
 
   async function setupJournal () {
+    if (!user.value) return
     const todaysDate = new Date().toISOString().split('T')[0];
-    const docRef = doc(db, "journals", todaysDate);
+    const docRef = doc(db, "users", user.value.uid, "journals", todaysDate);
     const existingJournalRef = await getDoc(docRef);
 
     if (existingJournalRef.exists()) {
       existingJournal = existingJournalRef.data();
       rating.value = existingJournal.rating;
 
-      completedHabits.value = { 
-        ...completedHabits.value, 
-        ...existingJournal.habits 
+      completedHabits.value = {
+        ...completedHabits.value,
+        ...existingJournal.habits
       };
-      
+
       document.getElementById('journalentry').value = existingJournal['journalentry'];
     } else {
       console.log("No such document!");
@@ -40,16 +44,20 @@
   )
 
   async function updateJournalEntry() {
+    if (!user.value) return
     let journal = {}
     journal['rating'] = rating.value;
     journal['habits'] = toRaw(completedHabits.value);
     journal['journalentry'] = document.getElementById('journalentry').value;
-    
+
     console.log(journal);
     const todaysDate = new Date().toISOString().split('T')[0];
-    await setDoc(doc(db, "journals", todaysDate), journal);
+    await setDoc(doc(db, "users", user.value.uid, "journals", todaysDate), journal);
   }
-  
+
+
+
+
   watch(rating, async() => {
     updateJournalEntry();
   })
@@ -62,12 +70,13 @@
     setupJournal()
   });
 
+
 </script>
 
 
 <template>
   <Countdown />
-    
+
   <h1>What's on your mind?</h1>
   <h2>Mood</h2>
   <div class="rating">
