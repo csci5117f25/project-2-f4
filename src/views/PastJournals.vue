@@ -1,20 +1,40 @@
 <template>
+    <h2 class="text-3xl underline pb-5">Past Journals</h2>
+    <div v-if="journals.length === 0" class="text-sm text-base-content/70">No journals yet.</div>
 
-  <h2 class="text-3xl underline pb-5">Past Journals</h2>
- <div v-if="loading" class="text-sm text-base-content/70">Loading journals…</div>
-  <div v-else-if="journals.length === 0" class="text-sm text-base-content/70">No journals yet.</div>
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        <PastJournalCard
+        v-for="journal in journals"
+        :key="journal.id"
+        :date="journal.id"
+        :journalEntry="journal.journalentry"
+        :rating="journal.rating"
+        :habits="journal.habitsArray"
+        :readonly="false"
+        @view="openModal(journal)"
+        />
 
-  <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-    <PastJournalCard
-      v-for="journal in journals"
-      :key="journal.id"
-      :date="journal.id"
-      :journalEntry="journal.journalentry"
-      :rating="journal.rating"
-      :habits="journal.habitsArray"
-      readonly
-    />
-  </div>
+        <Teleport to="body">
+            <dialog class="modal" :open="open">
+                <div class="modal-box w-full max-w-2xl">
+                <PastJournalCard
+                    v-if="selectedJournal"
+                    :date="selectedJournal.id"
+                    :journalEntry="selectedJournal.journalentry"
+                    :rating="selectedJournal.rating"
+                    :habits="selectedJournal.habitsArray"
+                    :readonly="true"
+                />
+
+                <div class="modal-action">
+                    <button class="btn btn-primary" @click="open = false">
+                    Close
+                    </button>
+                </div>
+                </div>
+            </dialog>
+        </Teleport>
+    </div>  
 </template>
 
 <script setup>
@@ -23,11 +43,14 @@ import { useCurrentUser } from "vuefire";
 import { db } from "../firebase_config";
 import { ref, onMounted, watch } from "vue";
 import { collection, getDocs } from "firebase/firestore";
+
 const user = useCurrentUser();
 const journals = ref([]);
+
 function objectToArray(habits = {}) {
   return Object.entries(habits).map(([name, done]) => ({ name, done }));
 }
+
 async function getJournals() {
   if (!user.value) {
     journals.value = [];
@@ -48,11 +71,25 @@ async function getJournals() {
     habitsArray: objectToArray(j.habits ?? {}),
   }));
 }
+
 onMounted(() => {
   if (user.value) getJournals();
 });
+
 watch(user, (u) => {
   if (u) getJournals();
   else journals.value = [];
 });
+
+const open = ref(false)
+const selectedJournal = ref(null)
+
+function openModal(journal) {
+  selectedJournal.value = journal
+  open.value = true
+}
 </script>
+
+<style>
+
+</style>
