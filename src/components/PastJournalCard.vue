@@ -40,17 +40,18 @@
             </div>
 
             <button
-                v-if="!readonly"
-                @click="$emit('view')"
-                class="btn btn-secondary"
-            >View</button>
-
+                v-if="readonly"
+                @click="$emit('close')"
+                class="btn btn-primary mt-4"
+            >
+                Close
+            </button>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, defineProps } from "vue";
+import { defineProps } from "vue";
 const props = defineProps({
   date:  String,
   journalEntry:String,
@@ -58,6 +59,5 @@ const props = defineProps({
   habits: Array,
   readonly: Boolean
 });
-const open = ref(false)
 
 </script>
