@@ -34,7 +34,7 @@ watch([user, () => route.path], maybeRedirect);
       <RouterLink to="/" class="btn btn-ghost text-xl">Habit Tracker</RouterLink>
     </div>
 
-    <div class="flex items-center gap-6">
+    <div class="navbar-center flex items-center gap-6">
       <RouterLink to="/" class="btn btn-ghost text-base">Home</RouterLink>
       <RouterLink to="/tracker" class="btn btn-ghost text-base">Tracker</RouterLink>
       <RouterLink to="/past-journals" class="btn btn-ghost text-base">View Past Journals</RouterLink>
