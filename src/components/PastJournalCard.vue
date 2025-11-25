@@ -39,15 +39,15 @@
                 <p class="mt-2 text-sm text-base-content/80 whitespace-pre-wrap">{{ journalEntry }}</p>
             </div>
 
-            <button 
+            <button
                 v-if="readonly"
-                @click="$emit('close')" 
+                @click="$emit('close')"
                 class="btn btn-primary mt-4"
             >
                 Close
             </button>
         </div>
-    </div> 
+    </div>
 </template>
 
 <script setup>
