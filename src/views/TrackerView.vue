@@ -75,49 +75,69 @@
 
 
 <template>
-  <Countdown />
+  <div class="min-h-screen bg-base-200 pt-20 px-4 pb-8">
+    <div class="max-w-2xl mx-auto space-y-6">
 
-  <h1>What's on your mind?</h1>
-  <h2>Mood</h2>
-  <div class="rating">
-    <input type="radio" name="rating-1" class="mask mask-star" aria-label="1 star" :value="1" v-model="rating"/>
-    <input type="radio" name="rating-1" class="mask mask-star" aria-label="2 star" :value="2" v-model="rating"/>
-    <input type="radio" name="rating-1" class="mask mask-star" aria-label="3 star" :value="3" v-model="rating"/>
-    <input type="radio" name="rating-1" class="mask mask-star" aria-label="4 star" :value="4" v-model="rating"/>
-    <input type="radio" name="rating-1" class="mask mask-star" aria-label="5 star" :value="5" v-model="rating"/>
+      <!-- Countdown Card -->
+      <div class="card bg-base-100 shadow-lg">
+        <div class="card-body items-center text-center">
+          <Countdown />
+        </div>
+      </div>
+
+      <!-- Main Journal Card -->
+      <div class="card bg-base-100 shadow-lg">
+        <div class="card-body">
+          <h1 class="card-title text-3xl font-bold mb-4">What's on your mind?</h1>
+
+          <!-- Mood Section -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text text-lg font-semibold">Mood</span>
+            </label>
+            <div class="rating rating-lg">
+              <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" aria-label="1 star" :value="1" v-model="rating"/>
+              <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" aria-label="2 star" :value="2" v-model="rating"/>
+              <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" aria-label="3 star" :value="3" v-model="rating"/>
+              <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" aria-label="4 star" :value="4" v-model="rating"/>
+              <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" aria-label="5 star" :value="5" v-model="rating"/>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Habits Section -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text text-lg font-semibold">Daily Habits</span>
+            </label>
+            <div class="flex flex-wrap gap-4 mt-2">
+              <Habit
+                v-for="habit in habitList"
+                :key="habit"
+                :title="habit"
+                v-model="completedHabits[habit]"
+              />
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Journal Entry Section -->
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text text-lg font-semibold">Journal Entry</span>
+            </label>
+            <textarea
+              id="journalentry"
+              class="textarea textarea-bordered textarea-lg w-full h-40"
+              placeholder="What happened today? How are you feeling?"
+              @change="updateJournalEntry()"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <h2>Habits</h2>
-  <Habit
-      v-for="habit in habitList"
-      :key="habit"
-      :title="habit"
-      v-model="completedHabits[habit]"
-    />
-
-  <h2>Journal Entry</h2>
-  <textarea id="journalentry" class="textarea" placeholder="What happened today?" @change="updateJournalEntry()"></textarea>
 </template>
-
-
-<style scoped>
-#countdown {
-  text-align: center;
-}
-
-h1 {
-  font-size: 36px;
-  margin: 5px auto;
-}
-
-h2 {
-  font-size: 20px;
-  margin: 10px 0 0 0;
-}
-
-.habit {
-  text-align: center;
-  display: inline-block;
-  margin: 5px;
-}
-</style>
