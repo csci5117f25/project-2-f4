@@ -28,7 +28,14 @@ const router = createRouter({
       name: 'past-journals',
       component: PastJournals,
       meta: { requiresAuth: true },
-    }
+    },
+
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/SettingsView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 

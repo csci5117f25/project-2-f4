@@ -85,3 +85,4 @@ npm install pug
 npm install
 npm install firebase@^9.23.0
 npm install vuefire@next
+npm install sweetalert2
