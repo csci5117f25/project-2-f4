@@ -4,9 +4,12 @@ import { db } from '../firebase_config';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { useCurrentUser } from 'vuefire';
 import Swal from 'sweetalert2';
+import { requestNotificationPermission } from '../useMessaging';
 
 const user = useCurrentUser();
 const habits = ref([]);
+const notificationToken = ref(null);
+const notificationsEnabled = ref(false);
 
 // Habit types
 const habitTypes = [
@@ -17,11 +20,21 @@ const habitTypes = [
 
 onMounted(async () => {
   if (!user.value) return;
-  const docRef = doc(db, 'users', user.value.uid, 'settings', 'habits');
-  const docSnap = await getDoc(docRef);
 
-  if (docSnap.exists()) {
-    habits.value = docSnap.data().habitList || [];
+  // Load habits
+  const habitsRef = doc(db, 'users', user.value.uid, 'settings', 'habits');
+  const habitsSnap = await getDoc(habitsRef);
+  if (habitsSnap.exists()) {
+    habits.value = habitsSnap.data().habitList || [];
+  }
+
+  // Check notification status
+  const notifRef = doc(db, 'users', user.value.uid, 'settings', 'notifications');
+  const notifSnap = await getDoc(notifRef);
+  if (notifSnap.exists() && notifSnap.data().enabled) {
+    notificationsEnabled.value = true;
+    notificationToken.value = notifSnap.data().fcmToken;
+    console.log('FCM Token:', notificationToken.value);
   }
 });
 
@@ -55,6 +68,44 @@ async function saveHabits() {
     icon: 'success',
     confirmButtonText: 'OK'
   });
+}
+
+async function enableNotifications() {
+  try {
+    const token = await requestNotificationPermission();
+    if (token) {
+      notificationToken.value = token;
+      notificationsEnabled.value = true;
+
+      // Save token to Firestore for this user
+      if (user.value) {
+        const docRef = doc(db, 'users', user.value.uid, 'settings', 'notifications');
+        await setDoc(docRef, { fcmToken: token, enabled: true });
+      }
+
+      Swal.fire({
+        title: 'Notifications Enabled!',
+        text: 'You will now receive push notifications.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+    } else {
+      Swal.fire({
+        title: 'Permission Denied',
+        text: 'Please allow notifications in your browser settings.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  } catch (error) {
+    console.error('Error enabling notifications:', error);
+    Swal.fire({
+      title: 'Error',
+      text: 'Failed to enable notifications. Make sure you have added the VAPID key.',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+  }
 }
 </script>
 
@@ -140,6 +191,36 @@ async function saveHabits() {
 
       <div class="card-actions justify-end mt-6">
         <button @click="saveHabits" class="btn btn-primary">Save Changes</button>
+      </div>
+
+      <!-- Notification Settings Section -->
+      <div class="divider mt-8">Notification Settings</div>
+
+      <div class="card bg-base-200">
+        <div class="card-body">
+          <h3 class="font-semibold text-lg mb-2">Push Notifications</h3>
+          <p class="text-sm text-base-content/70 mb-4">
+            Enable push notifications to receive reminders and updates about your habits.
+          </p>
+
+          <div v-if="notificationsEnabled" class="alert alert-success">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Notifications are enabled!</span>
+          </div>
+
+          <button
+            v-else
+            @click="enableNotifications"
+            class="btn btn-primary"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            Enable Push Notifications
+          </button>
+        </div>
       </div>
     </div>
   </div>
