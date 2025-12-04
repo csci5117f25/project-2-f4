@@ -3,7 +3,6 @@
     <div v-if="journals.length === 0" class="text-sm text-base-content/70">No journals yet.</div>
 
     <div v-else class="flex justify-center mt-24">
-        <!-- Calendar -->
         <calendar-date
         class="cally bg-base-100 border border-base-300 shadow-lg rounded-box p-6 
          w-full max-w-md sm:max-w-lg md:max-w-6xl lg:max-w-6xl mx-auto text-xl"
@@ -32,47 +31,32 @@
 
 <script setup>
 import PastJournalCard from "@/components/PastJournalCard.vue";
-import { useCurrentUser } from "vuefire";
+import { useCurrentUser, useCollection } from 'vuefire'
 import { db } from "../firebase_config";
-import { ref, onMounted, watch } from "vue";
-import { collection, getDocs } from "firebase/firestore";
+import { ref, computed } from "vue";
+import { collection } from "firebase/firestore";
+
 
 const user = useCurrentUser();
-const journals = ref([]);
 
 function objectToArray(habits = {}) {
   return Object.entries(habits).map(([name, done]) => ({ name, done }));
 }
 
-async function getJournals() {
-  if (!user.value) {
-    journals.value = [];
-    return;
-  }
-  const colRef = collection(db, "users", user.value.uid, "journals");
-  const snap = await getDocs(colRef);
-  const items = [];
-  snap.forEach((doc) => {
-    const data = doc.data();
-    items.push({ id: doc.id, ...data });
-  });
-  items.sort((a, b) => (a.id < b.id));
-  journals.value = items.map((j) => ({
+const journalsSource = computed(() =>
+  user.value ? collection(db, "users", user.value.uid, "journals") : null
+);
+
+const journalsCollection = useCollection(journalsSource);
+
+const journals = computed(() =>
+  (journalsCollection.value ?? []).map(j => ({
     id: j.id,
     journalentry: j.journalentry ?? "",
     rating: j.rating ?? 0,
     habitsArray: objectToArray(j.habits ?? {}),
-  }));
-}
-
-onMounted(() => {
-  if (user.value) getJournals();
-});
-
-watch(user, (u) => {
-  if (u) getJournals();
-  else journals.value = [];
-});
+  }))
+);
 
 const open = ref(false)
 const selectedJournal = ref(null)
@@ -97,15 +81,11 @@ function onDateSelected(event) {
 
 <style>
 calendar-date.cally {
-  font-size: 1.5rem; /* larger text */
+  font-size: 1.5rem; 
   line-height: 2rem;
 }
 
-
-
 calendar-date.cally calendar-month {
-  min-height: 50vh; /* taller calendar grid */
+  min-height: 50vh; 
 }
-
-
 </style>
