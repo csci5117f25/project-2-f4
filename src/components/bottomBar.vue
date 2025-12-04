@@ -29,21 +29,27 @@ watch([user, () => route.path], maybeRedirect);
 </script>
 
 <template>
-  <div class="navbar bg-base-100 shadow-sm fixed top-0 left-0 right-0 z-50 w-full">
-    <div class="navbar-start pl-8">
+  <div class="navbar bg-base-100 shadow-sm fixed bottom-0 left-0 right-0 z-50 w-full">
+    <!-- <div class="navbar-start pl-8">
       <RouterLink to="/" class="btn btn-ghost text-xl">Habit Tracker</RouterLink>
-    </div>
+    </div> -->
 
     <div class="navbar-center flex items-center gap-6">
-      <RouterLink to="/" class="btn btn-ghost text-base">Home</RouterLink>
-      <RouterLink to="/past-journals" class="btn btn-ghost text-base">View Past Journals</RouterLink>
-      <RouterLink to="/settings" class="btn btn-ghost text-base">Settings</RouterLink>
+      <RouterLink to="/" class="btn btn-ghost p-0">
+        <img src="../../public/home.png" alt="Home" class="h-10 w-10" />
+      </RouterLink>
+      <RouterLink to="/past-journals" class="btn btn-ghost p-0">
+        <img src="../../public/previousjournals.png" alt="Previous Journals" class="h-10 w-10" />
+      </RouterLink>
+      <RouterLink to="/settings" class="btn btn-ghost p-0">
+        <img src="../../public/settings.png" alt="Settings" class="h-10 w-10" />
+      </RouterLink>
     </div>
 
-    <div class="navbar-end gap-2 pr-8">
+    <div class="navbar-end gap-2">
       <button v-if="!user" @click="login()" class="btn btn-primary">Login</button>
       <div v-else class="flex gap-6 items-center">
-        <p>Welcome, {{ user.displayName }}!</p>
+        <!-- <p>Welcome, {{ user.displayName }}!</p> -->
 
         <button @click="logout()" class="btn btn-secondary">Logout</button>
       </div>

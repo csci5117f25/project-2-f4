@@ -1,7 +1,11 @@
 <script setup>
 const props = defineProps({
   title: String,
-  modelValue: Boolean
+  type: {
+    type: String,
+    default: 'checkbox'
+  },
+  modelValue: [Boolean, Number, String]
 })
 const emit = defineEmits(['update:modelValue'])
 </script>
@@ -10,7 +14,69 @@ const emit = defineEmits(['update:modelValue'])
 <template>
   <div id="habit1" class="habit">
     <p>{{ props.title }}</p>
-    <input type="checkbox" class="checkbox" :checked="modelValue" @change="emit('update:modelValue', $event.target.checked)" />
+
+    <!-- Checkbox type -->
+    <input
+      v-if="type === 'checkbox'"
+      type="checkbox"
+      class="checkbox"
+      :checked="modelValue"
+      @change="emit('update:modelValue', $event.target.checked)"
+    />
+
+    <!-- Stars type -->
+    <div v-else-if="type === 'stars'" class="rating">
+      <input
+        type="radio"
+        :name="`rating-${title}`"
+        class="mask mask-star-2 bg-orange-400"
+        :value="1"
+        :checked="modelValue === 1"
+        @change="emit('update:modelValue', 1)"
+      />
+      <input
+        type="radio"
+        :name="`rating-${title}`"
+        class="mask mask-star-2 bg-orange-400"
+        :value="2"
+        :checked="modelValue === 2"
+        @change="emit('update:modelValue', 2)"
+      />
+      <input
+        type="radio"
+        :name="`rating-${title}`"
+        class="mask mask-star-2 bg-orange-400"
+        :value="3"
+        :checked="modelValue === 3"
+        @change="emit('update:modelValue', 3)"
+      />
+      <input
+        type="radio"
+        :name="`rating-${title}`"
+        class="mask mask-star-2 bg-orange-400"
+        :value="4"
+        :checked="modelValue === 4"
+        @change="emit('update:modelValue', 4)"
+      />
+      <input
+        type="radio"
+        :name="`rating-${title}`"
+        class="mask mask-star-2 bg-orange-400"
+        :value="5"
+        :checked="modelValue === 5"
+        @change="emit('update:modelValue', 5)"
+      />
+    </div>
+
+    <!-- Text type -->
+    <input
+      v-else-if="type === 'text'"
+      type="text"
+      class="input input-bordered input-sm"
+      :value="modelValue"
+      @input="emit('update:modelValue', $event.target.value)"
+      placeholder="Enter text..."
+    />
   </div>
 </template>
 
