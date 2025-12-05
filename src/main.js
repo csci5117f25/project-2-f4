@@ -2,10 +2,8 @@
 import '/src/style.css'
 import { createApp } from 'vue'
 import App from './App.vue'
-import VCalendar from 'v-calendar'
-import 'v-calendar/style.css'
 import router from './router'
-
+import "cally"
 
 //           login imports
 
@@ -16,7 +14,6 @@ import { firebaseApp } from './firebase_config.js'
 ///           end of login imports
 
 const app = createApp(App)
-app.use(VCalendar, {})
 const auth = getAuth(firebaseApp)
 
 app.use(router)

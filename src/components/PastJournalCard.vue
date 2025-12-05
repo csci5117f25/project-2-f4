@@ -6,7 +6,7 @@
                     <h2 class="text-2xl font-bold">
                         Journal — <span class="text-sm text-base-content/60">{{ date }}</span>
                     </h2>
-                    <div class="pt-2 flex items-center gap-2">
+                    <div v-if="isFilled(rating)" class="pt-2 flex items-center gap-2">
                         <h3 class="font-semibold">Mood rating:</h3>
                         <div class="flex items-center">
                             <div
@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <div class="mt-4">
+            <div v-if="isFilled(habits)" class="mt-4">
                 <h4 class="font-medium">Habits:</h4>
                 <ul class="mt-2 space-y-2">
                     <li v-for="(h, idx) in habits" :key="idx" class="flex items-center gap-3">
@@ -34,7 +34,7 @@
                 </ul>
             </div>
 
-            <div class="mt-4">
+            <div v-if="isFilled(journalEntry)" class="mt-4">
                 <h4 class="font-medium">Journal Entry:</h4>
                 <p class="mt-2 text-sm text-base-content/80 whitespace-pre-wrap">{{ journalEntry }}</p>
             </div>
@@ -59,5 +59,12 @@ const props = defineProps({
   habits: Array,
   readonly: Boolean
 });
+
+function isFilled(value) {
+  if (Array.isArray(value)) return value.length > 0;
+  if (typeof value === "string") return value.trim().length > 0;
+  if (typeof value === "number") return value > 0;
+  return !!value;
+}
 
 </script>
