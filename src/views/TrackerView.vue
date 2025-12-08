@@ -1,7 +1,7 @@
 <script setup>
   import Habit from '../components/individualHabit.vue'
   import Countdown from '../components/countdownComponent.vue'
-  import { ref, watch, toRaw, onMounted } from 'vue';
+  import { ref, watch, toRaw } from 'vue';
 
   import {db} from '../firebase_config'
   import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -10,9 +10,43 @@
   const user = useCurrentUser()
 
   let existingJournal = {};
+  const habitList = ref([]);
+  const isLoading = ref(true); // Prevent watchers from saving during initial load
+
+  async function loadHabits() {
+    if (!user.value) return;
+    const docRef = doc(db, 'users', user.value.uid, 'settings', 'habits');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      habitList.value = docSnap.data().habitList || [];
+    } else {
+      // Default habits if none are set
+      habitList.value = [
+        { name: "Workout", type: "checkbox" },
+        { name: "NYT Wordle", type: "checkbox" },
+        { name: "Call Mom", type: "checkbox" }
+      ];
+    }
+
+    // Initialize completedHabits based on habit types
+    const habitsObj = {};
+    habitList.value.forEach(habit => {
+      if (habit.type === 'checkbox') {
+        habitsObj[habit.name] = false;
+      } else if (habit.type === 'stars') {
+        habitsObj[habit.name] = 0;
+      } else if (habit.type === 'text') {
+        habitsObj[habit.name] = '';
+      }
+    });
+    completedHabits.value = habitsObj;
+  }
 
   async function setupJournal () {
-    if (!user.value) return
+    if (!user.value) return;
+    await loadHabits();
+
     const todaysDate = new Date().toISOString().split('T')[0];
     const docRef = doc(db, "users", user.value.uid, "journals", todaysDate);
     const existingJournalRef = await getDoc(docRef);
@@ -30,18 +64,13 @@
     } else {
       console.log("No such document!");
     }
+
+    // Done loading, now watchers can save changes
+    isLoading.value = false;
   }
 
-  const habitList = [
-    "Workout",
-    "NYT Wordle",
-    "Call Mom"
-  ]
-
   const rating = ref(-1);
-  const completedHabits = ref(
-    Object.fromEntries(habitList.map(h => [h, false]))
-  )
+  const completedHabits = ref({})
 
   async function updateJournalEntry() {
     if (!user.value) return
@@ -59,16 +88,21 @@
 
 
   watch(rating, async() => {
+    if (isLoading.value) return; // Don't save during initial load
     updateJournalEntry();
   })
 
   watch(completedHabits, () => {
+    if (isLoading.value) return; // Don't save during initial load
     updateJournalEntry()
   }, { deep: true })
 
-  onMounted(() => {
-    setupJournal()
-  });
+  // Watch for user to be loaded, then setup journal
+  watch(user, (newUser) => {
+    if (newUser) {
+      setupJournal()
+    }
+  }, { immediate: true });
 
 
 </script>
@@ -114,9 +148,10 @@
             <div class="flex flex-wrap gap-4 mt-2">
               <Habit
                 v-for="habit in habitList"
-                :key="habit"
-                :title="habit"
-                v-model="completedHabits[habit]"
+                :key="habit.name"
+                :title="habit.name"
+                :type="habit.type"
+                v-model="completedHabits[habit.name]"
               />
             </div>
           </div>

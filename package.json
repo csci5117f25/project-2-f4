@@ -13,8 +13,13 @@
     "lint": "eslint . --fix --cache"
   },
   "dependencies": {
+    "body-parser": "^2.2.1",
+    "express": "^5.2.1",
     "firebase": "^9.23.0",
+    "firebase-admin": "^13.6.0",
     "pug": "^3.0.3",
+    "sweetalert2": "^11.26.3",
+    "v-calendar": "^3.1.2",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3",
     "vuefire": "^3.0.0-alpha.9"

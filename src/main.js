@@ -4,7 +4,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-
 //           login imports
 
 import { VueFire, VueFireAuth } from 'vuefire'
@@ -14,7 +13,6 @@ import { firebaseApp } from './firebase_config.js'
 ///           end of login imports
 
 const app = createApp(App)
-
 const auth = getAuth(firebaseApp)
 
 app.use(router)
