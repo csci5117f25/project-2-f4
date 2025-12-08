@@ -1,7 +1,7 @@
 <script setup>
   import Habit from '../components/individualHabit.vue'
   import Countdown from '../components/countdownComponent.vue'
-  import { ref, watch, toRaw, onMounted } from 'vue';
+  import { ref, watch, toRaw } from 'vue';
 
   import {db} from '../firebase_config'
   import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -11,6 +11,7 @@
 
   let existingJournal = {};
   const habitList = ref([]);
+  const isLoading = ref(true); // Prevent watchers from saving during initial load
 
   async function loadHabits() {
     if (!user.value) return;
@@ -63,6 +64,9 @@
     } else {
       console.log("No such document!");
     }
+
+    // Done loading, now watchers can save changes
+    isLoading.value = false;
   }
 
   const rating = ref(-1);
@@ -84,16 +88,21 @@
 
 
   watch(rating, async() => {
+    if (isLoading.value) return; // Don't save during initial load
     updateJournalEntry();
   })
 
   watch(completedHabits, () => {
+    if (isLoading.value) return; // Don't save during initial load
     updateJournalEntry()
   }, { deep: true })
 
-  onMounted(() => {
-    setupJournal()
-  });
+  // Watch for user to be loaded, then setup journal
+  watch(user, (newUser) => {
+    if (newUser) {
+      setupJournal()
+    }
+  }, { immediate: true });
 
 
 </script>

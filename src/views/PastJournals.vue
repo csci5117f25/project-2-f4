@@ -4,7 +4,7 @@
 
     <div v-else class="flex justify-center mt-24">
         <calendar-date
-        class="cally bg-base-100 border border-base-300 shadow-lg rounded-box p-6 
+        class="cally bg-base-100 border border-base-300 shadow-lg rounded-box p-6
          w-full max-w-md sm:max-w-lg md:max-w-6xl lg:max-w-6xl mx-auto text-xl"
         @change="onDateSelected"
         >
@@ -26,7 +26,7 @@
                 />
             </dialog>
         </Teleport>
-    </div>  
+    </div>
 </template>
 
 <script setup>
@@ -81,11 +81,11 @@ function onDateSelected(event) {
 
 <style>
 calendar-date.cally {
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   line-height: 2rem;
 }
 
 calendar-date.cally calendar-month {
-  min-height: 50vh; 
+  min-height: 50vh;
 }
 </style>
