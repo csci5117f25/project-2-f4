@@ -3,9 +3,12 @@ import '/src/style.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import VCalendar from "v-calendar";
+import 'v-calendar/style.css'
+import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, PointElement, LinearScale, CategoryScale } from 'chart.js'
+ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, LinearScale, CategoryScale)
 
 //           login imports
-
 import { VueFire, VueFireAuth } from 'vuefire'
 import { getAuth } from 'firebase/auth'
 import { firebaseApp } from './firebase_config.js'
@@ -27,5 +30,6 @@ app.use(VueFire, {
 })
 
 ////                     end of login
+app.use(VCalendar);
 
 app.mount('#app')
