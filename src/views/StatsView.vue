@@ -132,7 +132,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useCurrentUser, useCollection } from 'vuefire';
 import { db } from '../firebase_config';
 import { collection } from 'firebase/firestore';
@@ -180,7 +180,6 @@ const habitCalendars = computed(() => {
     })
   })
 
-  // IMPORTANT: each habit maps to an ARRAY OF ATTRIBUTE OBJECTS
   const result = {}
   Object.entries(map).forEach(([habit, attr]) => {
     result[habit] = [attr]
@@ -285,32 +284,6 @@ const longestStreak = computed(() => {
 const habitNames = computed(() => Object.keys(habitCalendars.value || {})) 
 const activeHabitIndex = ref(0) 
 const activeHabitName = computed(() => habitNames.value.length > 0 ? habitNames.value[activeHabitIndex.value] : null ) 
-
-watch(habitNames, (names) => { 
-    if (names.length > 0 && activeHabitName.value === null) { 
-        activeHabitIndex.value = 0 
-    } 
-})
-watch(journals, (newVal) => {
-  console.log("journals updated", newVal)
-})
-
-watch(habitCalendars, (newVal) => {
-  console.log("habitCalendars updated", newVal)
-})
-
-watch(habitNames, (newVal) => {
-  console.log("habitNames updated", newVal)
-})
-
-watch(activeHabitName, (name) => {
-  console.log(
-    name,
-    habitCalendars.value?.[name]?.map(a => a.dates)
-  )
-})
-
-
 function nextHabit() {
   if (habitNames.value.length === 0) return
   activeHabitIndex.value = (activeHabitIndex.value + 1) % habitNames.value.length
