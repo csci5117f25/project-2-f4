@@ -22,6 +22,7 @@ async function getStarted() {
     <div class="hero min-h-[80vh]">
       <div class="hero-content text-center">
         <div class="max-w-2xl">
+          <img src="../../logo.png">
           <h1 class="text-5xl font-bold">Track Your Habits,<br/>Transform Your Life</h1>
           <p class="py-6 text-lg text-base-content/70">
             Build better habits, track your mood, and journal your thoughts.

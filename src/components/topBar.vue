@@ -31,7 +31,9 @@ watch([user, () => route.path], maybeRedirect);
 <template>
   <div class="navbar bg-base-100 shadow-sm fixed top-0 left-0 right-0 z-50 w-full">
     <div class="navbar-start pl-8">
-      <RouterLink to="/" class="btn btn-ghost text-xl">Habit Tracker</RouterLink>
+      <RouterLink to="/" class="btn btn-ghost text-xl">
+        <img src="../../logo.png" style="height: 100%">
+      </RouterLink>
     </div>
 
     <div class="navbar-center flex items-center gap-6">
