@@ -37,7 +37,7 @@ watch([user, () => route.path], maybeRedirect);
     <div class="navbar-center flex items-center gap-6">
       <RouterLink to="/" class="btn btn-ghost text-base">Home</RouterLink>
       <RouterLink to="/past-journals" class="btn btn-ghost text-base">View Past Journals</RouterLink>
-      <RouterLink to="/analytics" class="btn btn-ghost text-base">Stats</RouterLink>
+      <RouterLink to="/stats" class="btn btn-ghost text-base">Stats</RouterLink>
       <RouterLink to="/settings" class="btn btn-ghost text-base">Settings</RouterLink>
     </div>
 
