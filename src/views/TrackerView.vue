@@ -46,8 +46,8 @@
   async function setupJournal () {
     if (!user.value) return;
     await loadHabits();
-
-    const todaysDate = new Date().toISOString().split('T')[0];
+    
+    const todaysDate = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
     const docRef = doc(db, "users", user.value.uid, "journals", todaysDate);
     const existingJournalRef = await getDoc(docRef);
 
@@ -80,7 +80,7 @@
     journal['journalentry'] = document.getElementById('journalentry').value;
 
     console.log(journal);
-    const todaysDate = new Date().toISOString().split('T')[0];
+    const todaysDate = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
     await setDoc(doc(db, "users", user.value.uid, "journals", todaysDate), journal);
   }
 

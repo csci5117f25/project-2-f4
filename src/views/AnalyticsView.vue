@@ -267,7 +267,8 @@ const habitStats = computed(() => {
 const currentStreak = computed(() => {
   if (journals.value.length === 0) return 0;
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
+
   const sortedDates = journals.value.map(j => j.date).sort().reverse();
 
   let streak = 0;
