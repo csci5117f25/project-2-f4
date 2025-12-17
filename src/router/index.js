@@ -14,6 +14,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      meta: {
+        title: "Home",
+        icon: "home.png"
+      },
       component: HomeView,
     },
 
@@ -21,20 +25,32 @@ const router = createRouter({
       path: '/tracker',
       name: 'tracker',
       component: TrackerView,
-      meta: { requiresAuth: true },
+      meta: { 
+        title: "Tracker",
+        requiresAuth: true,
+        icon: "tracker.png",
+       },
     },
     {
       path: '/past-journals',
       name: 'past-journals',
       component: PastJournals,
-      meta: { requiresAuth: true },
+      meta: { 
+        title: "Previous Journals",
+        requiresAuth: true,
+        icon: "previousjournals.png",
+       },
     },
 
     {
       path: '/analytics',
       name: 'analytics',
       component: () => import('../views/AnalyticsView.vue'),
-      meta: { requiresAuth: true },
+      meta: { 
+        title: "Stats",
+        requiresAuth: true,
+        icon: "analytics.png",
+       },
     },
     {
       path: '/stats',
@@ -47,7 +63,11 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: () => import('../views/SettingsView.vue'),
-      meta: { requiresAuth: true },
+      meta: { 
+        title: "Settings",
+        requiresAuth: true,
+        icon: "settings.png",
+       },
     },
   ],
 })

@@ -15,6 +15,17 @@ import { firebaseApp } from './firebase_config.js'
 
 ///           end of login imports
 
+router.afterEach((to) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+
+  if (to.meta.icon) {
+    let link = document.querySelector("link[rel~='icon']")
+    link.href = to.meta.icon
+  }
+})
+
 const app = createApp(App)
 const auth = getAuth(firebaseApp)
 

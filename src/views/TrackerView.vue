@@ -46,8 +46,8 @@
   async function setupJournal () {
     if (!user.value) return;
     await loadHabits();
-
-    const todaysDate = new Date().toISOString().split('T')[0];
+    
+    const todaysDate = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
     const docRef = doc(db, "users", user.value.uid, "journals", todaysDate);
     const existingJournalRef = await getDoc(docRef);
 
@@ -80,7 +80,7 @@
     journal['journalentry'] = document.getElementById('journalentry').value;
 
     console.log(journal);
-    const todaysDate = new Date().toISOString().split('T')[0];
+    const todaysDate = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
     await setDoc(doc(db, "users", user.value.uid, "journals", todaysDate), journal);
   }
 
@@ -127,9 +127,9 @@
           <!-- Mood Section -->
           <div class="form-control">
             <label class="label">
-              <span class="label-text text-lg font-semibold">Mood</span>
+              <span class="label-text text-lg font-semibold">Rate your mood: </span>
             </label>
-            <div class="rating rating-lg">
+            <div class="rating rating-lg mb-2 ml-3">
               <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" aria-label="1 star" :value="1" v-model="rating"/>
               <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" aria-label="2 star" :value="2" v-model="rating"/>
               <input type="radio" name="rating-1" class="mask mask-star-2 bg-orange-400" aria-label="3 star" :value="3" v-model="rating"/>
