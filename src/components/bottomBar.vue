@@ -36,16 +36,16 @@ watch([user, () => route.path], maybeRedirect);
 
     <div class="navbar-center flex items-center gap-6">
       <RouterLink to="/" class="btn btn-ghost p-0">
-        <img src="../../public/home.png" alt="Home" class="h-10 w-10" />
+        <img src="../../home.png" alt="Home" class="h-10 w-10" />
       </RouterLink>
       <RouterLink to="/past-journals" class="btn btn-ghost p-0">
-        <img src="../../public/previousjournals.png" alt="Previous Journals" class="h-10 w-10" />
+        <img src="../../previousjournals.png" alt="Previous Journals" class="h-10 w-10" />
       </RouterLink>
       <RouterLink to="/analytics" class="btn btn-ghost px-2 text-xs">
-        <img src="../../public/analytics.png" alt="Analytics" class="h-10 w-10" />
+        <img src="../../analytics.png" alt="Analytics" class="h-10 w-10" />
       </RouterLink>
       <RouterLink to="/settings" class="btn btn-ghost p-0">
-        <img src="../../public/settings.png" alt="Settings" class="h-10 w-10" />
+        <img src="../../settings.png" alt="Settings" class="h-10 w-10" />
       </RouterLink>
     </div>
 
