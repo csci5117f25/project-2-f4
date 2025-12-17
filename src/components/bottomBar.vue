@@ -41,7 +41,7 @@ watch([user, () => route.path], maybeRedirect);
       <RouterLink to="/past-journals" class="btn btn-ghost p-0">
         <img src="../../previousjournals.png" alt="Previous Journals" class="h-10 w-10" />
       </RouterLink>
-      <RouterLink to="/analytics" class="btn btn-ghost px-2 text-xs">
+      <RouterLink to="/stats" class="btn btn-ghost px-2 text-xs">
         <img src="../../analytics.png" alt="Analytics" class="h-10 w-10" />
       </RouterLink>
       <RouterLink to="/settings" class="btn btn-ghost p-0">

@@ -56,7 +56,11 @@ const router = createRouter({
       path: '/stats',
       name: 'stats',
       component: () => import('../views/StatsView.vue'),
-      meta: { requiresAuth: true },
+      meta: { 
+        title: "Stats",
+        requiresAuth: true,
+        icon: "analytics.png",
+       },
     },
 
     {
