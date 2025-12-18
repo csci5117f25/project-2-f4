@@ -4,32 +4,34 @@ CSCI 5117, Fall 2025, [assignment description](https://canvas.umn.edu/courses/51
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
-* App Link: <https://TODO.com/>
+- Team Name: F4
+- App Name: Trackify
+- App Link: <https://project2-d576e.web.app/>
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
-
+- Brock Bye, bye00035@umn.edu
+- Ethan Fizel, fizel0003@umn.edu
+- Calvin Chau, chau0127@umn.edu
+- Mohammed Al Maawali, almaa011@umn.edu
 
 ## Key Features
 
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+- Implementing the rotating habit calendar.
+- Implementing the calendar in Past Journals.
+- Editing habits from checkmark to star rating.
+- Implementing the clock tile.
 
 Which (if any) device integration(s) does your app support?
 
-* ...
+- Push notifications
 
 Which (if any) progressive web app feature(s) does your app support?
 
-* ...
-
-
+- ...
 
 ## Mockup images
 
@@ -37,42 +39,72 @@ Which (if any) progressive web app feature(s) does your app support?
 Each mockup consists of the ideal view for a PC on the left next to the ideal view for a mobile device on the right. Our project is a habit tracker, where each day you can track habits such as your mood, a quick diary entry, and anything you're hoping to get done for the day. It allows you to view previous journal entries on an individual level and your previous journals at large by tracking stats about your mood or how often you've completed specific habits.
 
 ### Title Page
-![Title Page](mockup/titlemockup.png)  
+
+![Title Page](mockup/titlemockup.png)
+
 ### Home Page
-![Home Page](mockup/homepagemockup.png)  
+
+![Home Page](mockup/homepagemockup.png)
+
 ### View Previous Journals
-![Journals Page](mockup/previousjournalsmockup.png)  
+
+![Journals Page](mockup/previousjournalsmockup.png)
+
 ### Popup Page
-![Popup Page](mockup/popupmockup.png)  
+
+![Popup Page](mockup/popupmockup.png)
+
 ### Settings Page
-![Settings Page](mockup/settingsmockup.png)  
+
+![Settings Page](mockup/settingsmockup.png)
+
 ### Stats Page
-![Stats Page](mockup/statsmockup.png)  
+
+![Stats Page](mockup/statsmockup.png)
 
 ## Testing Notes
 
 **Is there anything special we need to know in order to effectively test your app? (optional):**
 
-* ...
-
-
+- ...
 
 ## Screenshots of Site (complete)
 
 **[Add a screenshot of each key page](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
 along with a very brief caption:**
+Each page consists of the same page layout with the exception of the navbar at the bottom for the mobile view. Our project is a habit tracker, where each day you can track habits such as your mood, a quick diary entry, and anything you're hoping to get done for the day. It allows you to view previous journal entries on an individual level and your previous journals at large by tracking stats about your mood or how often you've completed specific habits.
 
-![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
+### Title Page
 
+![Title Page](final_images/login.png)
 
+### Home Page
+
+![Home Page](final_images/home.png)
+
+### View Previous Journals
+
+![Journals Page](final_images/pastJournals.png)
+
+### Popup Page
+
+![Popup Page](final_images/popup.png)
+
+### Settings Page
+
+![Settings Page](final_images/settings.png)
+
+### Stats Page
+
+![Stats Page](final_images/stats.png)
 
 ## External Dependencies
 
 **Document integrations with 3rd Party code or services here.
 Please do not document required libraries (e.g., VUE, Firebase, vuefire).**
 
-* Library or service name: description of use
-* ...
+- Library or service name: description of use
+- ...
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
@@ -80,9 +112,11 @@ here:**
 
 ...
 
-
 npm install pug
 npm install
 npm install firebase@^9.23.0
 npm install vuefire@next
 npm install sweetalert2
+npm install v-calendar
+npm install motion-v
+npm install -D tailwindcss@latest @tailwindcss/vite@latest
